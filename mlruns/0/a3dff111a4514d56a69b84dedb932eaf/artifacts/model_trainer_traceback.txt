@@ -1,0 +1,57 @@
+Traceback (most recent call last):
+  File "/Users/egglisten/Data Science/projects/breast_cancer_prediction/.venv/lib/python3.13/site-packages/mlflow/tracking/metric_value_conversion_utils.py", line 12, in _try_get_item
+    return x.item()
+           ~~~~~~^^
+ValueError: can only convert an array of size 1 to a Python scalar
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/egglisten/Data Science/projects/breast_cancer_prediction/src/utils.py", line 126, in eval_model
+    mlflow.log_metric(f"{model_name}_confusion matrix", confi_matrix)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/egglisten/Data Science/projects/breast_cancer_prediction/.venv/lib/python3.13/site-packages/mlflow/tracking/fluent.py", line 1090, in log_metric
+    return MlflowClient().log_metric(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        run_id,
+        ^^^^^^^
+    ...<7 lines>...
+        dataset_digest=dataset.digest if dataset is not None else None,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/egglisten/Data Science/projects/breast_cancer_prediction/.venv/lib/python3.13/site-packages/mlflow/tracking/client.py", line 2321, in log_metric
+    return self._tracking_client.log_metric(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        run_id,
+        ^^^^^^^
+    ...<7 lines>...
+        model_id=model_id,
+        ^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/egglisten/Data Science/projects/breast_cancer_prediction/.venv/lib/python3.13/site-packages/mlflow/telemetry/track.py", line 30, in wrapper
+    result = func(*args, **kwargs)
+  File "/Users/egglisten/Data Science/projects/breast_cancer_prediction/.venv/lib/python3.13/site-packages/mlflow/tracking/_tracking_service/client.py", line 377, in log_metric
+    metric_value = convert_metric_value_to_float_if_possible(value)
+  File "/Users/egglisten/Data Science/projects/breast_cancer_prediction/.venv/lib/python3.13/site-packages/mlflow/tracking/metric_value_conversion_utils.py", line 48, in convert_metric_value_to_float_if_possible
+    possible_float = converter_fn(x)
+  File "/Users/egglisten/Data Science/projects/breast_cancer_prediction/.venv/lib/python3.13/site-packages/mlflow/tracking/metric_value_conversion_utils.py", line 30, in wrapper
+    return func(x)
+  File "/Users/egglisten/Data Science/projects/breast_cancer_prediction/.venv/lib/python3.13/site-packages/mlflow/tracking/metric_value_conversion_utils.py", line 63, in convert_metric_value_to_float_if_ndarray
+    return float(_try_get_item(x))
+                 ~~~~~~~~~~~~~^^^
+  File "/Users/egglisten/Data Science/projects/breast_cancer_prediction/.venv/lib/python3.13/site-packages/mlflow/tracking/metric_value_conversion_utils.py", line 14, in _try_get_item
+    raise MlflowException(
+    ...<2 lines>...
+    )
+mlflow.exceptions.MlflowException: Failed to convert metric value to float: can only convert an array of size 1 to a Python scalar
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/egglisten/Data Science/projects/breast_cancer_prediction/src/components/model_trainer.py", line 61, in initiate_trainer
+    report = eval_model(X_train, X_test, y_train, y_test, models)
+  File "/Users/egglisten/Data Science/projects/breast_cancer_prediction/src/utils.py", line 137, in eval_model
+    raise CustomException(e, sys)
+src.exception.CustomException: Error occured in python script: /Users/egglisten/Data Science/projects/breast_cancer_prediction/src/utils.py in line number: 126 with the error message: Failed to convert metric value to float: can only convert an array of size 1 to a Python scalar
