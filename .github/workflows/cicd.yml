@@ -40,6 +40,7 @@ jobs:
   deploy-image:
     needs: build-and-test
     runs-on: ubuntu-latest
+    # Only deploy if tests pass and we are on the main branch
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
@@ -64,8 +65,8 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          # Changed to lowercase 'f' to match standard Linux naming
-          file: ./DockerFile 
+          # FIXED: Changed from DockerFile to Dockerfile (standard casing)
+          file: ./Dockerfile 
           push: true
-          # Using the secret for the username ensures the tag is valid
+          # FIXED: Tagged using the secret to prevent naming mismatches
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/breast-cancer-predictor:latest
